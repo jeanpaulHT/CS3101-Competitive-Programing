@@ -1,0 +1,30 @@
+void sol(){
+
+    sort(all(arr));
+
+    int count = 0;
+    FOR(i, 1, n-2){
+        int prev = arr[i-1];
+        int cur = arr[i];
+
+        auto f = upper_bound(all(arr), prev+ cur );
+
+        // cout<<prev<<"+"<<cur<<':';
+        // cout<<"("<< prev+cur <<" "<< *f<<")["<< distance(f, arr.end())<<"]";
+
+
+        // if(*f == prev + cur){
+        //     int c =  distance(f, arr.end()) - 1;
+        //     count += c;
+        // }
+        // else{
+        
+        int c =  distance(f, arr.end());
+        count += c;
+        
+        // cout<<'\n';
+    }
+
+    cout<<count<<'\n';
+
+}

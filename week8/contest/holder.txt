@@ -1,0 +1,56 @@
+void sol(){
+
+    aux[0].F = 0;
+    aux[0].S.F  = false;
+    aux[0].S.S = 0;
+    
+    FOR(i, 1, n){
+        
+        FOR(j,1, W){            
+            // dp[i][j] = max(dp[i][j], dp[i-1][j]);
+            
+            if(dp[i-1][j] > dp[i][j] ){
+                dp[i][j] = dp[i-1][j];
+                
+                aux[i].F = aux[i-1].F;
+                aux[i].S.F = false;
+                aux[i].S.S  = i-1;
+            }
+
+            if(w[i] <= j && dp[i][j] < dp[i-1][j - w[i]] + v[i]){
+                dp[i][j] = dp[i-1][j - w[i]] + v[i];
+                
+                // si es el primer item tomado
+                if(dp[i-1][j - w[i]] == 0){
+                    aux[i].F = 1;
+                    aux[i].S = i;
+                }
+                else{
+                    aux[i].F = aux[i-1].F + 1;
+                    aux[i].S =  aux[i-1].S;
+                }
+            }
+        }
+
+        printf("(p%d:%d) [%d,%d],", i, dp[i][W], aux[i].F, aux[i].S);
+
+    }
+    cout<<'\n';
+
+    cout<<aux[n].F<<"\n";
+
+    int i = aux[n].S;
+    int it = 0;
+
+    while(i != aux[i].S){
+        cout<<i<<' ';
+        i = aux[i].S;
+        it++;   
+    }
+    if(it != n) cout<<i;
+
+    cout<<'\n';
+
+
+    // cout<<dp[n][W]<<'\n';
+}
